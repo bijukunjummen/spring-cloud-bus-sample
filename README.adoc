@@ -1,0 +1,47 @@
+Spring Cloud Bus Demo
+---------------------
+
+This is a simple demonstration of Spring Cloud Bus feature of being able to refresh properties in all instances of an application
+
+.Start up RabbitMQ Server
+[source,java]
+----
+rabbitmq-server
+----
+
+.Start up Config Server
+[source,java]
+----
+cd sample-config
+mvn spring-boot:run
+----
+
+.Start up Service instance 1
+[source,java]
+----
+cd sample-service
+mvn spring-boot:run
+----
+
+.Start up Service instance 2
+[source,java]
+----
+cd sample-service
+mvn spring-boot:run -Dserver.port=8081
+----
+
+If all the applications have come up cleanly, the endpoint should be available at http://localhost:8080/show, http://localhost:8081/show
+
+
+. To change the property, open sample-config/src/main/resources/config/sample-service.yml and modify `service.prop` value and restart config server
+. The change will not reflect in the the applications
+. Now refresh the properties using a POST request:
+[source,java]
+----
+curl -X POST http://localhost:8080/bus/refresh
+----
+. The changed property should now reflect on all instances of the application.
+
+
+
+

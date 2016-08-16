@@ -1,0 +1,19 @@
+---
+server:
+  port: 8080
+
+samplepong:
+  ribbon:
+    DeploymentContextBasedVipAddresses: sample-pong
+    ReadTimeout: 5000
+    MaxAutoRetries: 2
+
+samplepongdirect:
+  ribbon:
+    DeploymentContextBasedVipAddresses: sample-pong
+    listOfServers: localhost:8082
+    ReadTimeout: 5000
+    MaxAutoRetries: 2
+
+another:
+  key: anotherkeyvalue
